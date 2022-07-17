@@ -165,7 +165,7 @@ class Brain {
 
         // Read output
         this.process.stdout.on('data', (data) => {
-          try{
+          try {
             const obj = JSON.parse(data.toString())
 
             if (typeof obj === 'object') {
@@ -195,16 +195,17 @@ class Brain {
                 executionTime
               })
             }
-          }
-          catch(e){
-            log.title('Brain');
-            log.error(e);
-            log.error(`process.stdout: ${String(data)}`);
+          } catch (e) {
+            log.title('Brain')
+            log.error(e)
+            log.error(`process.stdout: ${String(data)}`)
           }
         })
 
         // Handle error
         this.process.stderr.on('data', (data) => {
+          log.info('stderr happened, data is:');
+          log.info(data);
           const speech = `${this.wernicke('random_package_module_errors', '',
             { '%module_name%': moduleName, '%package_name%': packageName })}!`
           if (!opts.mute) {
