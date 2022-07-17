@@ -12,5 +12,8 @@ def run(string, entities):
 	for child in d.iterdir():
 		if child.is_dir(): 
 			packages = packages + child.name + '\n'
+			for skill in child.iterdir():
+				if skill.suffix == '.py' and skill.name != '__init__.py':
+					packages = packages + '   ' + skill.name + '\n'
 
 	return utils.output('inter', 'done', packages)
