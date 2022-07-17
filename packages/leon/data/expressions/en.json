@@ -90,5 +90,13 @@
         "Do you have something to say about Google Assistant?"
       ]
     }
+  },
+  "skillslist": {
+    "run": {
+      "expressions": [
+        "List skills",
+        "List modules"
+      ]
+    }
   }
 }
