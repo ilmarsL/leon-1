@@ -165,34 +165,41 @@ class Brain {
 
         // Read output
         this.process.stdout.on('data', (data) => {
-          const obj = JSON.parse(data.toString())
+          try{
+            const obj = JSON.parse(data.toString())
 
-          if (typeof obj === 'object') {
-            if (obj.output.type === 'inter') {
-              log.title(`${packageName} package`)
-              log.info(data.toString())
+            if (typeof obj === 'object') {
+              if (obj.output.type === 'inter') {
+                log.title(`${packageName} package`)
+                log.info(data.toString())
 
-              this.interOutput = obj.output
+                this.interOutput = obj.output
 
-              const speech = obj.output.speech.toString()
-              if (!opts.mute) {
-                this.talk(speech)
+                const speech = obj.output.speech.toString()
+                if (!opts.mute) {
+                  this.talk(speech)
+                }
+                speeches.push(speech)
+              } else {
+                output += data
               }
-              speeches.push(speech)
             } else {
-              output += data
-            }
-          } else {
-            const executionTimeEnd = Date.now()
-            const executionTime = executionTimeEnd - executionTimeStart
+              const executionTimeEnd = Date.now()
+              const executionTime = executionTimeEnd - executionTimeStart
 
-            /* istanbul ignore next */
-            reject({
-              type: 'warning',
-              obj: new Error(`The ${moduleName} module of the ${packageName} package is not well configured. Check the configuration file.`),
-              speeches,
-              executionTime
-            })
+              /* istanbul ignore next */
+              reject({
+                type: 'warning',
+                obj: new Error(`The ${moduleName} module of the ${packageName} package is not well configured. Check the configuration file.`),
+                speeches,
+                executionTime
+              })
+            }
+          }
+          catch(e){
+            log.title('Brain');
+            log.error(e);
+            log.error(`process.stdout: ${String(data)}`);
           }
         })
 
