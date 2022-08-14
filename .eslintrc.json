@@ -42,6 +42,12 @@
     "space-before-function-paren": ["error", "always"],
     "prefer-destructuring": ["error", { "array": true, "object": true }],
     "comma-dangle": ["error", "never"],
-    "semi": ["error", "never"]
+    "semi": ["error", "never"],
+    "camelcase": "off",
+    "function-paren-newline": ["warn"],
+    "function-call-argument-newline": ["warn"],
+    "grouped-accessor-pairs": ["warn"],
+    "no-promise-executor-return" : ["warn"],
+    "no-unsafe-optional-chaining": ["warn"]
   }
 }
